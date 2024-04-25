@@ -1423,6 +1423,8 @@ service ThriftHiveMetastore
   // If max parts is given then it will return only that many.
   list<Partition> get_partitions(1:string db_name, 2:string tbl_name, 3:i16 max_parts=-1)
                        throws(1:NoSuchObjectException o1, 2:MetaException o2)
+  list<Partition> get_partitions_with_order(1:string db_name, 2:string tbl_name, 3:i16 max_parts=-1, 4:bool is_asc)
+                       throws(1:NoSuchObjectException o1, 2:MetaException o2)
   list<Partition> get_partitions_with_auth(1:string db_name, 2:string tbl_name, 3:i16 max_parts=-1,
      4: string user_name, 5: list<string> group_names) throws(1:NoSuchObjectException o1, 2:MetaException o2)
 
@@ -1654,6 +1656,11 @@ service ThriftHiveMetastore
   // this is used by metastore client to send UGI information to metastore server immediately
   // after setting up a connection.
   list<string> set_ugi(1:string user_name, 2:list<string> group_names) throws (1:MetaException o1)
+
+  // this is used by metastore client to send gdpr token to metastore server immediately
+  // after setting up a connection.
+  bool set_token(1:string token)  throws (1:MetaException o1)
+  bool set_token_with_namespace(1:string token, 2:string name_space)  throws (1:MetaException o1)
 
   //Authentication (delegation token) interfaces
 
